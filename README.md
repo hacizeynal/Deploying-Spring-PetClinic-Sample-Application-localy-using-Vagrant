@@ -39,3 +39,4 @@ Create a deployment script for the **PetClinic** application. Use **Vagrant** to
     * Implement database connection fallback logic.  So that by default your java application should connect to mysql database on another VM. In case if that DB is not accessible application should connect to in-memory database (H2)
     * Instead **Virtualbox** use **AWS** provider
 # Deploying-Spring-PetClinic-Sample-Application-localy-using-Vagrant
+# Deploying-Spring-PetClinic-Sample-Application-localy-using-Vagrant
