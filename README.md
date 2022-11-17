@@ -1,8 +1,7 @@
 # DevOps Project Demo I
 ## Deploying Spring PetClinic Sample Application localy using Vagrant
 
-### Use source code from *[repo](https://gitlab.com/dan-it/az-groups/az-devops1.git)*
-### Create repository on Gitlab and commit all changes to your gitlab repository
+### Create repository on GitHub and commit all changes to your gitub repository
 
 Create a deployment script for the **PetClinic** application. Use **Vagrant** to automate the process of creating the infrastructure for the deployment with **Virtualbox** (*preferably*). As for provisioning you can choose to use **bash**, **python** or **ansbile** in any combination.
 
@@ -38,5 +37,3 @@ Create a deployment script for the **PetClinic** application. Use **Vagrant** to
     * Create a script to wait for up to 1 minute to check if the application is up and running. Use application healthcheck endpoint `http://localhost:8080/actuator/health` to see if response code is `200` and the status in the response body is up (`{"status":"UP"}`)
     * Implement database connection fallback logic.  So that by default your java application should connect to mysql database on another VM. In case if that DB is not accessible application should connect to in-memory database (H2)
     * Instead **Virtualbox** use **AWS** provider
-# Deploying-Spring-PetClinic-Sample-Application-localy-using-Vagrant
-# Deploying-Spring-PetClinic-Sample-Application-localy-using-Vagrant
