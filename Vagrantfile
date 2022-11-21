@@ -20,12 +20,18 @@ Vagrant.configure('2') do |config|
     aws.subnet_id = "subnet-0eac26c67bd7e38da"
     aws.associate_public_ip = true
     override.ssh.username = 'ubuntu'
-    override.ssh.private_key_path = '~/.ssh/key_pair_zhajili_AWS.pem'
+    override.ssh.private_key_path = '~/.ssh/AWS_KEY_PAIR.pem'
   end
   config.vm.define "app" do |app|
     app.vm.hostname = "app"
+    app.vm.provision :shell, :path => "nginx.sh"
   end
   config.vm.define "db" do |db|
-    db.vm.hostname = "db"
+    db.vm.hostname ="db"
+    db.vm.provision :shell, :path => "nginx.sh"
+  end
+  config.vm.define "db2" do |db2|
+    db2.vm.hostname ="db2"
+    db2.vm.provision :shell, :path => "nginx.sh"
   end
 end
