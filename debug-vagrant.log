@@ -1,0 +1,25 @@
+Bringing machine 'default' up with 'aws' provider...
+==> default: Warning! The AWS provider doesn't support any of the Vagrant
+==> default: high-level network configurations (`config.vm.network`). They
+==> default: will be silently ignored.
+==> default: Warning! You're launching this instance into a VPC without an
+==> default: elastic IP. Please verify you're properly connected to a VPN so
+==> default: you can access this machine, otherwise Vagrant will not be able
+==> default: to SSH into it.
+==> default: Launching an instance with the following settings...
+==> default:  -- Type: t2.micro
+==> default:  -- AMI: ami-0149b2da6ceec4bb0
+==> default:  -- Region: us-east-1
+==> default:  -- Keypair: AWS_KEY_PAIR
+==> default:  -- Subnet ID: subnet-0eac26c67bd7e38da
+==> default:  -- Security Groups: ["sg-0afee790418d871a5"]
+==> default:  -- Block Device Mapping: []
+==> default:  -- Terminate On Shutdown: false
+==> default:  -- Monitoring: false
+==> default:  -- EBS optimized: false
+==> default:  -- Source Destination check: 
+==> default:  -- Assigning a public IP address in a VPC: true
+==> default:  -- VPC tenancy specification: default
+==> default: Waiting for instance to become "ready"...
+==> default: Waiting for SSH to become available...
+==> default: Waiting for cleanup before exiting...
