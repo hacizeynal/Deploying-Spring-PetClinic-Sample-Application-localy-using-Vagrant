@@ -24,7 +24,7 @@ Vagrant.configure('2') do |config|
   end
   config.vm.define "app" do |app|
     app.vm.hostname = "app"
-    app.vm.provision :shell, :path => "nginx.sh"
+    app.vm.provision :shell, :path => "application_vm.sh"
     app.vm.network "forwarded_port", guest: 80, host: 8080
   end
   config.vm.define "db" do |db|
