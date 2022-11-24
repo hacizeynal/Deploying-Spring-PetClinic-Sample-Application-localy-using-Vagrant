@@ -36,3 +36,4 @@ Vagrant.configure('2') do |config|
   #   db2.vm.provision :shell, :path => "nginx.sh"
   # end
 end
+

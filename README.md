@@ -1,9 +1,9 @@
 # DevOps Project Demo I
 ## Deploying Spring PetClinic Sample Application localy using Vagrant
 
-### Create repository on GitHub and commit all changes to your gitub repository
+### Create repository on GitHub and commit all changes to your github repository
 
-Create a deployment script for the **PetClinic** application. Use **Vagrant** to automate the process of creating the infrastructure for the deployment with **Virtualbox** (*preferably*). As for provisioning you can choose to use **bash**, **python** or **ansbile** in any combination.
+Create a deployment script for the **PetClinic** application. Use **Vagrant** to automate the process of creating the infrastructure for the deployment with **Virtualbox** (*preferably*). As for provisioning you can choose to use **bash**, **python** or **ansibile** in any combination.
 
 - Subtask I - Infrastructure
 	* Describe *[two](https://www.vagrantup.com/docs/multi-machine/)* virtual machines using Vagrantfile for deployment of the application (codename **APP_VM**) and the database (codename **DB_VM**) 
