@@ -27,10 +27,10 @@ Vagrant.configure('2') do |config|
     app.vm.provision :shell, :path => "application_vm.sh"
     app.vm.network "forwarded_port", guest: 80, host: 8080
   end
-  config.vm.define "db" do |db|
-    db.vm.hostname ="db"
-    db.vm.provision :shell, :path => "mysql.sh"
-  end
+  # config.vm.define "db" do |db|
+  #   db.vm.hostname ="db"
+  #   db.vm.provision :shell, :path => "mysql.sh"
+  # end
   # config.vm.define "db2" do |db2|
   #   db2.vm.hostname ="db2"
   #   db2.vm.provision :shell, :path => "nginx.sh"
