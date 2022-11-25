@@ -65,6 +65,28 @@ Let's start to run our Vagrant and start to provision our Infrastructure via bas
 ==> app: Waiting for SSH to become available...
 
 ```
+After successful implementation we can verify on AWS that our VMs are created. 
+
 [![Screenshot-2022-11-25-at-20-15-50.png](https://i.postimg.cc/DzNNKC1Y/Screenshot-2022-11-25-at-20-15-50.png)](https://postimg.cc/t1hk3NSh)
+
+The application script will install latest updates, maven ,change hostname on the Ubuntu Machine.Then source code will be cloned and it will start to download dependencies from maven repository and build the source code via maven ,as a result artifact will be created.
+
+```
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-compress/1.20/commons-compress-1.20.jar (632 kB at 7.1 MB/s)
+    app: Downloaded from central: https://repo.maven.apache.org/maven2/org/tukaani/xz/1.9/xz-1.9.jar (116 kB at 1.1 MB/s)
+    app: [INFO] Building jar: /home/ubuntu/spring-petclinic/target/spring-petclinic-2.7.3.jar
+    app: [INFO]
+    app: [INFO] --- spring-boot-maven-plugin:2.7.3:repackage (repackage) @ spring-petclinic ---
+    app: [INFO] Replacing main artifact with repackaged archive
+    app: [INFO] ------------------------------------------------------------------------
+    app: [INFO] BUILD SUCCESS
+    app: [INFO] ------------------------------------------------------------------------
+    app: [INFO] Total time:  01:57 min
+    app: [INFO] Finished at: 2022-11-25T19:17:06Z
+    app: [INFO] ------------------------------------------------------------------------
+
+```
+
+
 
 
