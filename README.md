@@ -69,7 +69,7 @@ After successful implementation we can verify on AWS that our VMs are created.
 
 [![Screenshot-2022-11-25-at-20-15-50.png](https://i.postimg.cc/DzNNKC1Y/Screenshot-2022-11-25-at-20-15-50.png)](https://postimg.cc/t1hk3NSh)
 
-The application script will install latest updates, maven ,change hostname on the Ubuntu Machine.Then source code will be cloned and it will start to download dependencies from maven repository and build the source code via maven ,as a result artifact will be created.
+The application script will install latest updates, maven ,git ,change hostname on the Ubuntu Machine.Then source code will be cloned and it will start to download dependencies from maven repository and build the source code via maven ,as a result artifact will be created.
 
 ```
 Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/commons/commons-compress/1.20/commons-compress-1.20.jar (632 kB at 7.1 MB/s)
@@ -86,7 +86,97 @@ Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/commons
     app: [INFO] ------------------------------------------------------------------------
 
 ```
+After the maven build we should see directory called target which will contain our artifacts.
+
+```
+ubuntu@app-vm:~/spring-petclinic$ ls -l target/
+total 52448
+-rw-r--r-- 1 root root    10615 Nov 25 19:15 checkstyle-cachefile
+-rw-r--r-- 1 root root      283 Nov 25 19:15 checkstyle-checker.xml
+-rw-r--r-- 1 root root    11360 Nov 25 19:15 checkstyle-header.txt
+-rw-r--r-- 1 root root    11483 Nov 25 19:15 checkstyle-result.xml
+-rw-r--r-- 1 root root      459 Nov 25 19:15 checkstyle-suppressions.xml
+drwxr-xr-x 8 root root     4096 Nov 25 19:16 classes
+drwxr-xr-x 3 root root     4096 Nov 25 19:16 generated-sources
+drwxr-xr-x 3 root root     4096 Nov 25 19:16 generated-test-sources
+-rw-r--r-- 1 root root   586391 Nov 25 19:17 jacoco.exec
+drwxr-xr-x 2 root root     4096 Nov 25 19:17 maven-archiver
+drwxr-xr-x 3 root root     4096 Nov 25 19:16 maven-status
+drwxr-xr-x 3 root root     4096 Nov 25 19:17 site
+-rw-r--r-- 1 root root 52643110 Nov 25 19:17 spring-petclinic-2.7.3.jar
+-rw-r--r-- 1 root root   391710 Nov 25 19:17 spring-petclinic-2.7.3.jar.original
+drwxr-xr-x 2 root root     4096 Nov 25 19:16 surefire-reports
+drwxr-xr-x 3 root root     4096 Nov 25 19:16 test-classes
+
+```
+
+We can also see that as maven package manager is providing custom tests for source code and result will be written to **checkstyle-result.xml**.
+
+Application will be started with default profile ,by default it uses in memory database (H2) ,as a requirement we will need to change to mysql profile in order to leverage MySQL DB.
+
+Script will be started with detached mode ,which means it will run in the background.Below output shows that application is started with default profile and using Java 11.0.17 on app-vm with PID 20546.
+
+```
+ubuntu@app-vm:~/spring-petclinic$ 
+
+              |\      _,,,--,,_
+             /,`.-'`'   ._  \-;;,_
+  _______ __|,4-  ) )_   .;.(__`'-'__     ___ __    _ ___ _______
+ |       | '---''(_/._)-'(_\_)   |   |   |   |  |  | |   |       |
+ |    _  |    ___|_     _|       |   |   |   |   |_| |   |       | __ _ _
+ |   |_| |   |___  |   | |       |   |   |   |       |   |       | \ \ \ \
+ |    ___|    ___| |   | |      _|   |___|   |  _    |   |      _|  \ \ \ \
+ |   |   |   |___  |   | |     |_|       |   | | |   |   |     |_    ) ) ) )
+ |___|   |_______| |___| |_______|_______|___|_|  |__|___|_______|  / / / /
+ ==================================================================/_/_/_/
+
+:: Built with Spring Boot :: 2.7.3
 
 
+2022-11-25 19:33:09.431  INFO 20739 --- [           main] o.s.s.petclinic.PetClinicApplication     : Starting PetClinicApplication v2.7.3 using Java 11.0.17 on app-vm with PID 20739 (/home/ubuntu/spring-petclinic/target/spring-petclinic-2.7.3.jar started by ubuntu in /home/ubuntu/spring-petclinic)
+2022-11-25 19:33:09.438  INFO 20739 --- [           main] o.s.s.petclinic.PetClinicApplication     : No active profile set, falling back to 1 default profile: "default"
+2022-11-25 19:33:12.375  INFO 20739 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-11-25 19:33:12.520  INFO 20739 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 126 ms. Found 2 JPA repository interfaces.
+ubuntu@app-vm:~/spring-petclinic$ 2022-11-25 19:33:14.309  INFO 20739 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-11-25 19:33:14.343  INFO 20739 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-11-25 19:33:14.344  INFO 20739 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.65]
+2022-11-25 19:33:14.571  INFO 20739 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-11-25 19:33:14.578  INFO 20739 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4989 ms
+2022-11-25 19:33:16.369  INFO 20739 --- [           main] org.ehcache.core.EhcacheManager          : Cache 'vets' created in EhcacheManager.
+2022-11-25 19:33:16.399  INFO 20739 --- [           main] org.ehcache.jsr107.Eh107CacheManager     : Registering Ehcache MBean javax.cache:type=CacheStatistics,CacheManager=urn.X-ehcache.jsr107-default-config,Cache=vets
+2022-11-25 19:33:16.448  INFO 20739 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-11-25 19:33:17.078  INFO 20739 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-11-25 19:33:17.516  INFO 20739 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-11-25 19:33:17.660  INFO 20739 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.10.Final
+ubuntu@app-vm:~/spring-petclinic$ 2022-11-25 19:33:18.081  INFO 20739 --- [           main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+ubuntu@app-vm:~/spring-petclinic$ 2022-11-25 19:33:18.431  INFO 20739 --- [           main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+ubuntu@app-vm:~/spring-petclinic$ 2022-11-25 19:33:20.832  INFO 20739 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-11-25 19:33:20.856  INFO 20739 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-11-25 19:33:23.571  INFO 20739 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 13 endpoint(s) beneath base path '/actuator'
+2022-11-25 19:33:23.662  WARN 20739 --- [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8080 is already in use
+2022-11-25 19:33:23.670  INFO 20739 --- [           main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-11-25 19:33:23.680  INFO 20739 --- [           main] org.ehcache.core.EhcacheManager          : Cache 'vets' removed from EhcacheManager.
+2022-11-25 19:33:23.706  INFO 20739 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - 
+
+```
+We can verify via ps and netstat command that our application is listening to port 8080 with Process ID 20546
+
+```
+ubuntu@app-vm:~/spring-petclinic$ ps ax | grep java
+  20546 ?        Sl     0:19 java -jar target/spring-petclinic-2.7.3.jar
+  20766 pts/0    S+     0:00 grep --color=auto java
+ubuntu@app-vm:~/spring-petclinic$ netstat -tulnp 
+(Not all processes could be identified, non-owned process info
+ will not be shown, you would have to be root to see it all.)
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -                   
+tcp        0      0 127.0.0.53:53           0.0.0.0:*               LISTEN      -                   
+tcp6       0      0 :::8080                 :::*                    LISTEN      -                   
+tcp6       0      0 :::22                   :::*                    LISTEN      -                   
+udp        0      0 127.0.0.53:53           0.0.0.0:*                           -                   
+udp        0      0 172.31.18.10:68         0.0.0.0:*                           -    
+
+```
 
 
