@@ -65,4 +65,6 @@ Let's start to run our Vagrant and start to provision our Infrastructure via bas
 ==> app: Waiting for SSH to become available...
 
 ```
+[![Screenshot-2022-11-25-at-20-15-50.png](https://i.postimg.cc/DzNNKC1Y/Screenshot-2022-11-25-at-20-15-50.png)](https://postimg.cc/t1hk3NSh)
+
 
