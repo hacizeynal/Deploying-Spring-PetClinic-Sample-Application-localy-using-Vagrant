@@ -38,11 +38,12 @@ Create a deployment script for the **PetClinic** application. Use **Vagrant** to
     * Implement database connection fallback logic.  So that by default your java application should connect to mysql database on another VM. In case if that DB is not accessible application should connect to in-memory database (H2)
     * Instead **Virtualbox** use **AWS** provider
 
-## Solution
+## Solution - Subtask I - Infrastructure
 
 In this project we will spin up 2 VMs on AWS via Vagrant, we will deploy our Spring Petclinic application in 1st VM and on the 2nd VM we will install MySQL DB.
 
 Let's start to run our Vagrant and start to provision our Infrastructure via bash script.Make sure that your SG is allowing SSH access from your machine ,otherwise Vagrant will not able to SSH to Ubuntu VMs.We will see that scripts will be started to be executed once SSH connection is successful.
+Vagrant will create Private Network for easy communication between VMs.Ubuntu VMs are installed for this task.
 
 ```
 ==> db: you can access this machine, otherwise Vagrant will not be able
@@ -68,6 +69,8 @@ Let's start to run our Vagrant and start to provision our Infrastructure via bas
 After successful implementation we can verify on AWS that our VMs are created. 
 
 [![Screenshot-2022-11-25-at-20-15-50.png](https://i.postimg.cc/DzNNKC1Y/Screenshot-2022-11-25-at-20-15-50.png)](https://postimg.cc/t1hk3NSh)
+
+## Solution - Subtask III - Application
 
 The application script will install latest updates, maven ,git ,change hostname on the Ubuntu Machine.Then source code will be cloned and it will start to download dependencies from maven repository and build the source code via maven ,as a result artifact will be created.
 
@@ -114,7 +117,7 @@ We can also see that as maven package manager is providing custom tests for sour
 
 Application will be started with default profile ,by default it uses in memory database (H2) ,as a requirement we will need to change to mysql profile in order to leverage MySQL DB.
 
-Script will be started with detached mode ,which means it will run in the background.Below output shows that application is started with default profile and using Java 11.0.17 on app-vm with PID 20546.
+Script will be start application with detached mode ,which means it will run in the background.Below output shows that application is started with default profile and using Java 11.0.17 on app-vm with PID 20546.
 
 ```
 ubuntu@app-vm:~/spring-petclinic$ 
