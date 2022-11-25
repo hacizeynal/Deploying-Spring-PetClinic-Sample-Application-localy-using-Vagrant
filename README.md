@@ -3,7 +3,7 @@
 
 ### Create repository on GitHub and commit all changes to your github repository
 
-Create a deployment script for the **PetClinic** application. Use **Vagrant** to automate the process of creating the infrastructure for the deployment with **Virtualbox** (*preferably*). As for provisioning you can choose to use **bash**, **python** or **ansibile** in any combination.
+Create a deployment script for the **PetClinic** application. Use **Vagrant** to automate the process of creating the infrastructure for the deployment with **Virtualbox** (*preferably*). As for provisioning you can choose to use **bash**, **python** or **ansible** in any combination.
 
 - Subtask I - Infrastructure
 	* Describe *[two](https://www.vagrantup.com/docs/multi-machine/)* virtual machines using Vagrantfile for deployment of the application (codename **APP_VM**) and the database (codename **DB_VM**) 
@@ -37,3 +37,32 @@ Create a deployment script for the **PetClinic** application. Use **Vagrant** to
     * Create a script to wait for up to 1 minute to check if the application is up and running. Use application healthcheck endpoint `http://localhost:8080/actuator/health` to see if response code is `200` and the status in the response body is up (`{"status":"UP"}`)
     * Implement database connection fallback logic.  So that by default your java application should connect to mysql database on another VM. In case if that DB is not accessible application should connect to in-memory database (H2)
     * Instead **Virtualbox** use **AWS** provider
+
+## Solution
+
+In this project we will spin up 2 VMs on AWS via Vagrant, we will deploy our Spring Petclinic application in 1st VM and on the 2nd VM we will install MySQL DB.
+
+Let's start to run our Vagrant and start to provision our Infrastructure via bash script.Make sure that your SG is allowing SSH access from your machine ,otherwise Vagrant will not able to SSH to Ubuntu VMs.We will see that scripts will be started to be executed once SSH connection is successful.
+
+```
+==> db: you can access this machine, otherwise Vagrant will not be able
+==> db: to SSH into it.
+==> db: Launching an instance with the following settings...
+==> db:  -- Type: t2.micro
+==> db:  -- AMI: ami-0149b2da6ceec4bb0
+==> db:  -- Region: us-east-1
+==> db:  -- Keypair: AWS_KEY_PAIR
+==> db:  -- Subnet ID: subnet-0eac26c67bd7e38da
+==> db:  -- Security Groups: ["sg-0afee790418d871a5"]
+==> db:  -- Block Device Mapping: []
+==> db:  -- Terminate On Shutdown: false
+==> db:  -- Monitoring: false
+==> db:  -- EBS optimized: false
+==> db:  -- Source Destination check: 
+==> db:  -- Assigning a public IP address in a VPC: true
+==> db:  -- VPC tenancy specification: default
+==> db: Waiting for SSH to become available...
+==> app: Waiting for SSH to become available...
+
+```
+
