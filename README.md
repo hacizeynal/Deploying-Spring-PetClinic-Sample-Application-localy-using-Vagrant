@@ -113,7 +113,7 @@ drwxr-xr-x 3 root root     4096 Nov 25 19:16 test-classes
 
 ```
 
-We can also see that as maven package manager is providing custom tests for source code and result will be written to **checkstyle-result.xml**.
+We can also see that as Maven tool is running tests for source code and results are written to **checkstyle-result.xml**.
 
 Application will be started with default profile ,by default it uses in memory database (H2) ,as a requirement we will need to change to mysql profile in order to leverage MySQL DB.
 
@@ -182,4 +182,7 @@ udp        0      0 172.31.18.10:68         0.0.0.0:*                           
 
 ```
 
+## Solution - Subtask II - Database
+
+By default Application is using in-memory database (H2) ,per task we will need to use MySQL.
 
