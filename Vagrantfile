@@ -15,7 +15,7 @@ Vagrant.configure('2') do |config|
     aws.keypair_name = 'AWS_KEY_PAIR'
     aws.ami = 'ami-0ee23bfc74a881de5'
     aws.region = 'us-east-1'
-    aws.instance_type = "t2.micro"    
+    aws.instance_type = "t2.small"    
     aws.security_groups = ['sg-0afee790418d871a5']
     aws.subnet_id = "subnet-0eac26c67bd7e38da"
     aws.associate_public_ip = true
@@ -31,9 +31,5 @@ Vagrant.configure('2') do |config|
     db.vm.hostname ="db"
     db.vm.provision :shell, :path => "mysql_vm.sh"
   end
-  # config.vm.define "db2" do |db2|
-  #   db2.vm.hostname ="db2"
-  #   db2.vm.provision :shell, :path => "nginx.sh"
-  # end
 end
 

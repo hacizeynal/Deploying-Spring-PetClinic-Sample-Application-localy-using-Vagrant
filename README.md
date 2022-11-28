@@ -89,7 +89,7 @@ Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/commons
     app: [INFO] ------------------------------------------------------------------------
 
 ```
-After the maven build we should see directory called target which will contain our artifacts.
+After the maven build we should see directory called TARGET which will contain our artifacts.
 
 ```
 ubuntu@app-vm:~/spring-petclinic$ ls -l target/
@@ -184,5 +184,20 @@ udp        0      0 172.31.18.10:68         0.0.0.0:*                           
 
 ## Solution - Subtask II - Database
 
-By default Application is using in-memory database (H2) ,per task we will need to use MySQL.
+By default Application is using in-memory database (H2) ,per task we will need to use MySQL.We will need update first 2 lines on application-properties files in order to use MySQL.First line need to be changed from H2 to MySQL and on the second line we need add profile name which is mysql.
+
+```
+database=mysql
+spring.profiles.active=mysql
+
+```
+We will need also update Database URL on application-mysql.properties file ,by default localhost is written ,we need update it with private of DB VM.
+
+```
+spring.datasource.url=${MYSQL_URL:jdbc:mysql://${DB_HOST}:3306/petclinic}
+```
+After changing all details ,we will need to build our application one more time in order to get new artifact.
+
+After changing all details ,our application will start with profile MySQL.
+
 

@@ -12,7 +12,8 @@ git clone https://github.com/hacizeynal/Deploying-Spring-PetClinic-Sample-Applic
 cd Deploying-Spring-PetClinic-Sample-Application-localy-using-Vagrant
 
 
-export DATABASE_PASS='1234'
+echo "export DATABASE_PASS=1234" >> .bashrc
+source .bashrc
 sudo mysql -u root -p"$DATABASE_PASS" -e "create database petclinic" > /dev/null 2>&1
 sudo mysql -u root -p"$DATABASE_PASS" -e "grant all privileges on petclinic.* TO 'petclinic'@'localhost' identified by 'petclinic'" > /dev/null 2>&1
 sudo mysql -u root -p"$DATABASE_PASS" -e "grant all privileges on petclinic.* TO 'petclinic'@'%' identified by 'petclinic'" > /dev/null 2>&1
@@ -24,3 +25,4 @@ sudo sed -i "s/.*bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/mysql.conf.d
 echo "Updated mysql bind address in /etc/mysql/my.cnf to 0.0.0.0 to allow external connections."
 sudo service mysql stop
 sudo service mysql start
+
