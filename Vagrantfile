@@ -1,35 +1,34 @@
-# Require the AWS provider plugin
-require 'vagrant-aws'
-
-# Create and configure the AWS instance(s)
-Vagrant.configure('2') do |config|
-
-  # Use dummy AWS box
-  config.vm.box = 'aws-dummy'
-
-  # Specify AWS provider configuration
-  config.vm.provider 'aws' do |aws, override|
-    override.vm.synced_folder ".", "/vagrant", disabled: true
-    aws.access_key_id = ENV['AWS_ACCESS_KEY_ID']
-    aws.secret_access_key = ENV['AWS_SECRET_ACCESS_KEY']
-    aws.keypair_name = 'AWS_KEY_PAIR'
-    aws.ami = 'ami-0ee23bfc74a881de5'
-    aws.region = 'us-east-1'
-    aws.instance_type = "t2.small"    
-    aws.security_groups = ['sg-0afee790418d871a5']
-    aws.subnet_id = "subnet-0eac26c67bd7e38da"
-    aws.associate_public_ip = true
-    override.ssh.username = 'ubuntu'
-    override.ssh.private_key_path = '~/.ssh/AWS_KEY_PAIR.pem'
+Vagrant.configure("2") do |config|
+    config.vm.define "mysql" do |mysql|
+      mysql.vm.box = "ubuntu/focal64"
+      mysql.vm.hostname = "mysql"
+      mysql.vm.network "private_network", ip: "192.168.56.100"
+      mysql.vm.synced_folder ".", "/home/vagrant/zhajili"
+      mysql.vm.provision "shell", inline: <<-SHELL
+       apt-get update
+       apt-get install mysql-server -y
+       sudo sed -i "s/127.0.0.1/0.0.0.0/g" /etc/mysql/mysql.conf.d/mysqld.cnf
+       sudo service mysql restart
+       cd zhajili
+       sudo mysql < user.sql
+     SHELL
   end
-  config.vm.define "app" do |app|
-    app.vm.hostname = "app"
-    app.vm.provision :shell, :path => "application_vm.sh"
-    app.vm.network "forwarded_port", guest: 80, host: 8080
+  
+    config.vm.define "app" do |app|
+     app.vm.box = "ubuntu/focal64"
+     app.vm.network "private_network", ip: "192.168.56.200"
+     app.vm.hostname = "app"
+     app.vm.provision "shell", inline: <<-SHELL
+       apt-get update
+       apt-get upgrade -y
+       apt-get install default-jre -y
+       apt-get install maven -y
+       apt-get install git -y 
+       sudo apt install net-tools
+       git clone https://github.com/hacizeynal/Deploying-Spring-PetClinic-Sample-Application-localy-using-Vagrant.git
+       cd Deploying-Spring-PetClinic-Sample-Application-localy-using-Vagrant
+       sudo sed -i "s/localhost/192.168.56.100:3306/g" src/main/resources/application-mysql.properties
+       mvn spring-boot:run -Dspring-boot.run.profiles=mysql
+     SHELL
+    end
   end
-  config.vm.define "db" do |db|
-    db.vm.hostname ="db"
-    db.vm.provision :shell, :path => "mysql_vm.sh"
-  end
-end
-
