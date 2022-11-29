@@ -29,6 +29,8 @@ Vagrant.configure("2") do |config|
        cd Deploying-Spring-PetClinic-Sample-Application-localy-using-Vagrant
        sudo sed -i "s/localhost/192.168.56.100:3306/g" src/main/resources/application-mysql.properties
        mvn spring-boot:run -Dspring-boot.run.profiles=mysql
+       echo "Starting application!"
+       java -jar target/*.jar &
      SHELL
     end
   end
