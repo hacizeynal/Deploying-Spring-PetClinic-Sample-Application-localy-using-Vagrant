@@ -11,4 +11,4 @@ sudo sed -i "s/localhost/192.168.56.100:3306/g" src/main/resources/application-m
 echo "Package the application!"
 ./mvnw package
 echo "Starting application!"
-#  java -jar target/*.jar &
+java -jar target/*.jar &
