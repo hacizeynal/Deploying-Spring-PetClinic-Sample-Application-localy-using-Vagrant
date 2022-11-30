@@ -7,7 +7,6 @@ sudo apt install net-tools
 git clone https://github.com/spring-projects/spring-petclinic.git
 cd spring-petclinic
 sudo sed -i "s/localhost/192.168.56.100:3306/g" src/main/resources/application-mysql.properties
-#  mvn spring-boot:run -Dspring-boot.run.profiles=mysql
 echo "Package the application!"
 ./mvnw package
 echo "Starting application!"
